@@ -1,0 +1,7 @@
+acme: true
+acmeEmail: ${ACME_EMAIL}
+clusterName: ${CLUSTER_NAME}
+prefix: ${PREFIX}
+# chartMode: "custom"
+# highAvailability:
+#   replicaCount: 2

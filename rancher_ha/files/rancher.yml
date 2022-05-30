@@ -1,0 +1,10 @@
+replicas: 2
+hostname: ${rancher_hostname}
+ingress:
+  tls:
+    source: secret
+# letsEncrypt:
+#   email: ${letsencrypt_email}
+ingress.tls.source: secret
+tls: external
+privateCA: true
