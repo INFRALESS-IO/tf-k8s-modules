@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: health-endpoint
+  name: health-endpoint
+  namespace: istio-system
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: health-endpoint
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: health-endpoint
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      affinity:
+        # ENSURE THAT WE JUST DEPLOY TO NODES WITH THESE LABELS. LABELS ARE ASSIGNED TO NODES VIA SPOTINST USER DATA SETUP BY "LAUNCH SPECIFICATIONS".
+        # nodeAffinity:
+        #   requiredDuringSchedulingIgnoredDuringExecution:
+        #     nodeSelectorTerms:
+        #     - matchExpressions:
+        #       - key: spot-group
+        #         operator: In
+        #         values:
+        #         # this needs to be set as SPOT Launch specifications.
+        #         - private
+        #ENSURE THAT POD DO NOT DEPLOY TWICE WITHIN SAME NODE.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - health-endpoint
+              topologyKey: "kubernetes.io/hostname"

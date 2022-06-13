@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: health-endpoint
+  namespace: istio-system
+spec:
+  gateways:
+  - default
+  hosts:
+  - '*'
+  http:
+  - match:
+    - uri:
+        prefix: /health
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: health-endpoint.istio-system.svc.cluster.local
+        port:
+          number: 80

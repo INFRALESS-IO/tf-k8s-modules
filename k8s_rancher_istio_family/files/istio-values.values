@@ -1,0 +1,42 @@
+sidecarInjectorWebhook:
+  enableNamespacesByDefault: true
+tracing:
+  contextPath: /jaeger
+  enabled: true
+gateways:
+   istio-ingressgateway:
+     type: LoadBalancer
+# REFERENCE https://istio.io/latest/docs/reference/config/istio.operator.v1alpha1/
+overlayFile: |
+  apiVersion: install.istio.io/v1alpha1
+  kind: IstioOperator
+  spec:
+    components:
+      ingressGateways:
+      - enabled: true
+        name: istio-ingressgateway
+        k8s:
+          replicaCount: 2
+          # nodeSelector:
+          #   spotinst.io/node-lifecycle: od
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: "app"
+                        operator: In
+                        values:
+                        - istio-ingressgateway
+                  topologyKey: "kubernetes.io/hostname"
+          service:
+            externalTrafficPolicy: "${EXTERNAL_TRAFFIC_POLICY}"
+            type: "${SERVICE_TYPE}"
+          serviceAnnotations:
+            service.beta.kubernetes.io/aws-load-balancer-backend-protocol: ssl
+            service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+            service.beta.kubernetes.io/aws-load-balancer-ssl-cert: ${AWS_ACM_CERTIFICATE_GLOBAL_ARN}
+            service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+            service.beta.kubernetes.io/aws-load-balancer-subnets: ${SUBNET_IDS}
+            service.beta.kubernetes.io/aws-load-balancer-type: nlb
+            test: test4

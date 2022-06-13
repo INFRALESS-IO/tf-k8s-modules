@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sample-app1
+  namespace: istio-system
+spec:
+  gateways:
+  - default
+  hosts:
+  - {{ $.Values.sample_app1.dnsNames }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: sample-app1.private.svc.cluster.local
+        port:
+          number: 80

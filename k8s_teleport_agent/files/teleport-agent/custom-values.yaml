@@ -1,0 +1,5 @@
+  authToken: ${AUTH_TOKEN}
+  proxyAddr: ${PROXY_ADDR}
+  nodeName: ${NODE_NAME}
+  envName: ${ENV_NAME}
+  

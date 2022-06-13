@@ -1,0 +1,9 @@
+email:
+aws:
+  region:
+dns:
+  hostedZoneID:
+  commonName:
+  dnsNames:
+sample_app1:
+  dnsNames:

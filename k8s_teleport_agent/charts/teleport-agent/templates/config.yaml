@@ -1,0 +1,37 @@
+apiVersion: v1
+data:
+  teleport.yaml: |-
+    teleport:
+      nodename: {{ .Values.nodeName }}
+      auth_token: {{ .Values.authToken }}
+      auth_servers:
+      - {{ .Values.proxyAddr }}:443
+      data_dir: /etc/teleport/data
+    proxy_service:
+      enabled: "no"
+    auth_service:
+      enabled: "no"
+    ssh_service:
+      enabled: "yes"
+      labels:
+        env: "{{ .Values.envName }}"
+    app_service:
+      enabled: true
+      apps:
+      - name: "argocd-{{ .Values.envName }}"
+        uri: "https://argo-cd-argocd-server.argocd.svc.cluster.local"
+        insecure_skip_verify: true
+        labels:
+          env: {{ .Values.envName }}
+kind: ConfigMap
+metadata:
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:teleport.yaml: {}
+    manager: agent
+  name: teleport-config
+  namespace: teleport
