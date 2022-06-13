@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: {{ required "mongodb.namespace is required in chart values" .Values.mongodb.namespace }}
+  name: mongodb-backup-pvc
+
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50G

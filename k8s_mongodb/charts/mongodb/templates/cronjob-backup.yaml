@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mongodb-backup
+  namespace: {{ required "mongodb.namespace is required in chart values" .Values.mongodb.namespace }}
+
+spec:
+  schedule: "{{ required "mongodb.backup.schedule is required in chart values" .Values.mongodb.backup.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: "{{ required "mongodb.backup.image is required in chart values" .Values.mongodb.backup.image }}:{{ required "mongodb.backup.imageTag is required in chart values" .Values.mongodb.backup.imageTag }} "
+            command: ["/bin/bash"]
+            args: ["-c", "/opt/backup.sh"]
+            volumeMounts:
+            - name: backup
+              mountPath: /opt/backup
+            env:
+            - name: DB_HOST
+              value: "standalone-mongodb-0-svc.{{ required "mongodb.namespace is required in chart values" .Values.mongodb.namespace }}.svc.cluster.local"
+            - name: DB_NAME
+              value: {{ required "mongodb.backup.dbName is required in chart values" .Values.mongodb.backup.dbName }}
+            - name: ENV
+              value: {{ required "mongodb.backup.env is required in chart values" .Values.mongodb.backup.env }}
+            - name: S3_DESTIONATION
+              value: {{ required "mongodb.backup.s3Destination is required in chart values" .Values.mongodb.backup.s3Destination }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: mongobackup
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: DB_USERNAME
+                  name: mongobackup
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_ACCESS_KEY_ID
+                  name: mongobackup
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_SECRET_ACCESS_KEY
+                  name: mongobackup     
+          volumes:
+          - name: backup
+            persistentVolumeClaim:
+              claimName: mongodb-backup-pvc
+          restartPolicy: Never

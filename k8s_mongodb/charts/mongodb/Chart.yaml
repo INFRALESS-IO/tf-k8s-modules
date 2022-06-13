@@ -1,0 +1,7 @@
+name: mongodb 
+apiVersion: v2
+version: "9"
+appVersion: "9"
+description: MongoDB k8s.
+keywords:
+  - MongoDB

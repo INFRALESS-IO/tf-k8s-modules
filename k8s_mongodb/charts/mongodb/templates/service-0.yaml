@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: standalone-mongodb-0-svc
+  namespace: {{ required "mongodb.namespace is required in chart values" .Values.mongodb.namespace }}
+
+spec:
+  selector:
+    app: standalone-mongodb-0 
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
