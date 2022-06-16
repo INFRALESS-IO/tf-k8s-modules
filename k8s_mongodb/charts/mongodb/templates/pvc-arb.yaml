@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: 10G
-  storageClassName: xfs
+  storageClassName: mongodb-xfs

@@ -178,7 +178,7 @@ mongodb:
     dbName: ""
     env: ""
     s3Destination: ""
-    schedule "0 0 * * *"
+    schedule: "0 0 * * *"
     awsAccessKey: ""
     awsSecretKey: ""
     dbPassword: ""

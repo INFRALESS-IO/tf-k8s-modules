@@ -1,7 +1,7 @@
 mongodb:  
   availability_zone_1: "${AVAILABILITY_ZONE_1}"
   availability_zone_2: "${AVAILABILITY_ZONE_2}"
-  availability_zone_3: "${AVAILABILITY_ZONE_3}""
+  availability_zone_3: "${AVAILABILITY_ZONE_3}"
 
   namespace: "${NAMESPACE}"
   mongoKey: "${MONGODB_KEY}"
@@ -12,7 +12,7 @@ mongodb:
     env: "${BACKUP_ENV}"
     s3Destination: "${BACKUP_S3_DESTINATION}"
     awsAccessKey: "${BACKUP_AWS_ACCESS_KEY}"
-    awsSecretKey: "${BACKUP_AWS_SECRET_KEY}
+    awsSecretKey: "${BACKUP_AWS_SECRET_KEY}"
     dbPassword: "${BACKUP_DB_PASSWORD}"
     dbUsername: "${BACKUP_DB_USERNAME}"
 

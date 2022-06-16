@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: {{ required "mongodb.volumeSize is required in chart values" .Values.mongodb.volumeSize }}
-  storageClassName: xfs
+  storageClassName: mongodb-xfs
