@@ -45,11 +45,15 @@ resource "spotinst_ocean_aws_launch_spec" "private" {
   name                 = local.virtual_node_groups.private[count.index].name
   ocean_id             = spotinst_ocean_aws.this.id
   image_id             = local.image_id
+  instance_types       = try(local.virtual_node_groups.private[count.index].instance_types, null)
   user_data            = local.user_data
   security_groups      = local.security_groups
   iam_instance_profile = local.iam_instance_profile
   subnet_ids           = local.private_subnets_ids
   root_volume_size     = local.virtual_node_groups.private[count.index].root_volume_size
+  strategy {
+    spot_percentage = try(local.virtual_node_groups.private[count.index].spot_percentage, 100)
+  }
   labels {
     key   = "spot-group"
     value = local.virtual_node_groups.private[count.index].name
@@ -61,11 +65,15 @@ resource "spotinst_ocean_aws_launch_spec" "secure" {
   name                 = local.virtual_node_groups.secure[count.index].name
   ocean_id             = spotinst_ocean_aws.this.id
   image_id             = local.image_id
+  instance_types       = try(local.virtual_node_groups.secure[count.index].instance_types, null)
   user_data            = local.user_data
   security_groups      = local.security_groups
   iam_instance_profile = local.iam_instance_profile
   subnet_ids           = local.secure_subnets_ids
   root_volume_size     = local.virtual_node_groups.secure[count.index].root_volume_size
+  strategy {
+    spot_percentage = try(local.virtual_node_groups.secure[count.index].spot_percentage, 100)
+  }
   labels {
     key   = "spot-group"
     value = local.virtual_node_groups.secure[count.index].name
