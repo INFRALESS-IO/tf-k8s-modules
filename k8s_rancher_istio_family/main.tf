@@ -28,7 +28,7 @@ resource "helm_release" "rancher_istio" {
   #recreate_pods    = true
   #reset_values     = true
   values = [
-    templatefile("${path.module}/files/istio-values.values", { SERVICE_TYPE = "${local.rancher_istio.service_type}", EXTERNAL_TRAFFIC_POLICY = "${local.rancher_istio.external_traffic_policy}", AWS_ACM_CERTIFICATE_GLOBAL_ARN = "${local.aws_acm_certificate_global.arn}", SUBNET_IDS = "${sort(data.aws_subnet_ids.web_subnets.ids)[0]}, ${sort(data.aws_subnet_ids.web_subnets.ids)[1]}" })
+    templatefile("${path.module}/files/istio-values.values", { SERVICE_TYPE = "${local.rancher_istio.service_type}", EXTERNAL_TRAFFIC_POLICY = "${local.rancher_istio.external_traffic_policy}", AWS_ACM_CERTIFICATE_GLOBAL_ARN = "${local.aws_acm_certificate_global.arn}", SUBNET_IDS = "${join(", ", data.aws_subnet_ids.web_subnets.ids)}" })
   ]
   depends_on = [helm_release.rancher_kiali_server_crd]
 }
