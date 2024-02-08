@@ -40,7 +40,7 @@ enterprise: false
 # If true, create & use Pod Security Policy resources
 # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
 podSecurityPolicy:
-  enabled: true
+  enabled: false
 
 # Labels is a map of key-value pairs about this cluster
 labels: {}
