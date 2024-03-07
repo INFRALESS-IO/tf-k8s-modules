@@ -9,7 +9,7 @@ resource "helm_release" "rancher_monitoring_crd" {
   name             = "rancher-monitoring-crd"
   repository       = "https://charts.rancher.io"
   chart            = "rancher-monitoring-crd"
-  version          = "102.0.0+up1.1.0"
+  version          = "103.0.0+up1.18.2"
   namespace        = "cattle-monitoring-system"
   create_namespace = true
   replace          = true
@@ -19,7 +19,7 @@ resource "helm_release" "rancher_monitoring" {
   name             = "rancher-monitoring"
   repository       = "https://charts.rancher.io"
   chart            = "rancher-monitoring"
-  version          = "102.0.0+up1.1.0"
+  version          = "103.0.0+up1.18.2"
   namespace        = "cattle-monitoring-system"
   create_namespace = true
   replace          = true
