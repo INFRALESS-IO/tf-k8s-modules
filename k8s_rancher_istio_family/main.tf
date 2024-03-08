@@ -20,7 +20,7 @@ resource "helm_release" "rancher_istio" {
   name             = "rancher-istio"
   repository       = "https://charts.rancher.io"
   chart            = "rancher-istio"
-  version          = "100.0.0+up1.10.4"
+  version          = "102.0.0+up1.15.3"
   namespace        = "istio-system"
   create_namespace = true
   replace          = true
