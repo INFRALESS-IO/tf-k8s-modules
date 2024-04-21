@@ -2,21 +2,6 @@
 # MAIN
 # ----
 
-resource "helm_release" "cert_manager" {
-  name             = "cert-manager"
-  repository       = "https://charts.jetstack.io"
-  chart            = "cert-manager"
-  version          = local.k8s_cert_manager.version
-  namespace        = "cert-manager"
-  create_namespace = true
-  wait             = true
-  set {
-    name  = "installCRDs"
-    value = "true"
-  }
-}
-
-
 resource "kubernetes_namespace" "cattle_system" {
   metadata {
     annotations = {
@@ -72,7 +57,7 @@ resource "helm_release" "rancher" {
   values = [
     templatefile("${path.module}/files/rancher.yml", { rancher_hostname = var.rancher_hostname, letsencrypt_email = var.letsencrypt_email })
   ]
-  depends_on = [helm_release.cert_manager, kubernetes_secret.tls-secret]
+  depends_on = [kubernetes_secret.tls-secret]
 }
 
 
