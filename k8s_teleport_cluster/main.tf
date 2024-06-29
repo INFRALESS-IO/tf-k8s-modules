@@ -11,7 +11,7 @@ resource "helm_release" "teleport_cluster" {
   create_namespace = true
   wait             = true
   values = [
-    templatefile("${path.module}/files/teleport-cluster/custom-values.yaml", { ACME_EMAIL = "${try(local.acme_email, "")}", CLUSTER_NAME = "secure.${try(local.root_domain, "")}", PREFIX = "${local.prefix}" })
+    templatefile("${path.module}/files/teleport-cluster/custom-values.yaml", { ACME_EMAIL = "${try(local.acme_email, "")}", CLUSTER_NAME = "secure.${try(local.root_domain, "")}", PREFIX = "${local.prefix}", IMAGE = "${local.image}", IMAGE_TAG = "${local.image_tag}" })
   ]
 }
 

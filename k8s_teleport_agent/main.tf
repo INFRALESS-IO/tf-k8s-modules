@@ -11,6 +11,6 @@ resource "helm_release" "teleport_agent" {
   create_namespace = true
   wait             = true
   values = [
-    templatefile("${path.module}/files/teleport-agent/custom-values.yaml", { AUTH_TOKEN = "${try(local.auth_token, "")}", PROXY_ADDR = "${try(local.proxy_addr, "")}", NODE_NAME = "${local.node_name}", ENV_NAME = "${local.env_name}" })
+    templatefile("${path.module}/files/teleport-agent/custom-values.yaml", { AUTH_TOKEN = "${try(local.auth_token, "")}", PROXY_ADDR = "${try(local.proxy_addr, "")}", NODE_NAME = "${local.node_name}", ENV_NAME = "${local.env_name}", IMAGE = "${local.image}", IMAGE_TAG = "${local.image_tag}" })
   ]
 }
