@@ -7,4 +7,6 @@ variable "cluster_name" {}
 variable "prefix" {}
 variable "root_domain" {}
 variable "image" {}
-variable "image_tag" {}
+variable "image_tag" {
+    type = string
+}
