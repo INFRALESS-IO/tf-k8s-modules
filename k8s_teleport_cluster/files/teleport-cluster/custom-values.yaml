@@ -2,6 +2,8 @@ acme: true
 acmeEmail: ${ACME_EMAIL}
 clusterName: ${CLUSTER_NAME}
 prefix: ${PREFIX}
+image: ${IMAGE}
+teleportVersionOverride: "${IMAGE_TAG}"
 # chartMode: "custom"
 # highAvailability:
 #   replicaCount: 2

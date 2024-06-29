@@ -2,4 +2,6 @@
   proxyAddr: ${PROXY_ADDR}
   nodeName: ${NODE_NAME}
   envName: ${ENV_NAME}
+  image: ${IMAGE}
+  teleportVersionOverride: ${IMAGE_TAG}
   

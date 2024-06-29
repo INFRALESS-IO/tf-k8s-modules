@@ -118,7 +118,7 @@ spec:
     spec:
       affinity: {}
       containers:
-      - image: quay.io/gravitational/teleport:{{ .Chart.Version }}
+      - image: "{{ .Values.image }}:{{ .Values.tag }}"
         imagePullPolicy: Always
         name: teleport
         resources: {}
